@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trends Engineering Claim Processing System (Prototype)</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f0f4f8;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 2rem;
+      color: #1e2a3e;
+    }
+
+    /* Main container */
+    .prototype-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .app-header {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .app-header h1 {
+      font-size: 1.8rem;
+      color: #0f3b2c;
+      font-weight: 600;
+    }
+
+    .app-header p {
+      color: #2c5f4b;
+      margin-top: 0.3rem;
+    }
+
+    /* Two column layout */
+    .dashboard {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    /* Input Panel */
+    .input-panel {
+      flex: 1.2;
+      min-width: 360px;
+      background: white;
+      border-radius: 28px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+      padding: 1.8rem;
+    }
+
+    /* Output Panel */
+    .output-panel {
+      flex: 1.5;
+      min-width: 420px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .claim-preview-card {
+      background: white;
+      border-radius: 28px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+      padding: 1.8rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: #1f4d3a;
+      border-left: 5px solid #e67e22;
+      padding-left: 1rem;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #2c5f4b;
+    }
+
+    .form-group {
+      margin-bottom: 1.4rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #2c3e50;
+      font-size: 0.85rem;
+      letter-spacing: 0.3px;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      font-size: 0.95rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 16px;
+      background: white;
+      font-family: inherit;
+      transition: 0.2s;
+      outline: none;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: #e67e22;
+      box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.1);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .cost-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .cost-row .form-group {
+      flex: 1;
+    }
+
+    .dynamic-total {
+      background: #eef2f5;
+      padding: 1rem 1.2rem;
+      border-radius: 20px;
+      margin: 1rem 0 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border: 1px solid #dce5ec;
+    }
+
+    .total-label {
+      font-weight: 700;
+      color: #1e4a76;
+    }
+
+    .total-value {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #e67e22;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+
+    button {
+      background: #1f6e5c;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: white;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    button:hover {
+      background: #0e5544;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: #4b6f86;
+    }
+
+    .btn-secondary:hover {
+      background: #365a70;
+    }
+
+    .btn-outline {
+      background: white;
+      border: 1.5px solid #1f6e5c;
+      color: #1f6e5c;
+    }
+
+    .btn-outline:hover {
+      background: #e9f4f0;
+    }
+
+    /* Claim Document - Exactly matching the familiar BPC/Excel format */
+    .claim-document {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 1.6rem;
+      font-family: 'Courier New', 'Segoe UI', monospace;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .doc-header {
+      text-align: center;
+      border-bottom: 2px solid #2c3e50;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.8rem;
+    }
+
+    .doc-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #1f4d3a;
+    }
+
+    .company-sub {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #4a627a;
+      margin-top: 4px;
+    }
+
+    .bpc-details {
+      background: #f9fafb;
+      padding: 0.8rem;
+      border-radius: 12px;
+      margin: 1rem 0;
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .claim-field {
+      margin: 0.8rem 0;
+      display: flex;
+      border-bottom: 1px dotted #e2e8f0;
+      padding: 0.4rem 0;
+    }
+
+    .field-label {
+      font-weight: 700;
+      width: 150px;
+      flex-shrink: 0;
+      color: #2c5a74;
+    }
+
+    .field-value {
+      font-weight: 500;
+      word-break: break-word;
+    }
+
+    .items-table {
+      width: 100%;
+      margin: 1.2rem 0;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+
+    .items-table th, .items-table td {
+      border: 1px solid #cbd5e1;
+      padding: 0.5rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .items-table th {
+      background: #f1f5f9;
+      font-weight: 700;
+    }
+
+    .total-row {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      font-weight: 800;
+      border-top: 2px solid #e67e22;
+      padding-top: 0.7rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .signature-area {
+      margin-top: 1.8rem;
+      font-size: 0.75rem;
+      border-top: 1px dashed #aaa;
+      padding-top: 1rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+        margin: 0;
+      }
+      .input-panel, .button-group, .print-hide {
+        display: none !important;
+      }
+      .output-panel {
+        min-width: 100%;
+      }
+      .claim-preview-card {
+        box-shadow: none;
+        padding: 0;
+      }
+      .claim-document {
+        border: none;
+      }
+    }
+
+    .footnote {
+      font-size: 0.7rem;
+      text-align: center;
+      margin-top: 1rem;
+      color: #6c8dae;
+    }
+
+    hr {
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+<div class="prototype-container">
+  <div class="app-header">
+    <h1>⚡ Trends Engineering · Claim Automation Prototype</h1>
+    <p>Prototype for automated claim processing and document generation</p>
+  </div>
+
+  <div class="dashboard">
+    <!-- LEFT: DATA INPUT PANEL (Structured capture) -->
+    <div class="input-panel">
+      <h2>📋 Job & Cost Entry</h2>
+      <form id="jobForm" onsubmit="return false;">
+        <div class="form-group">
+          <label>📌 BPC Work Order No.</label>
+          <input type="text" id="woNumber" value="448223" placeholder="e.g., 448223">
+        </div>
+        <div class="form-group">
+          <label>🏗️ Project Title / Job Description</label>
+          <textarea id="projectTitle" rows="2">Ratanang Mahupe - New single phase connection</textarea>
+        </div>
+        <div class="form-group">
+          <label>📍 Location / Village</label>
+          <input type="text" id="location" value="Kauxwi, Modubana">
+        </div>
+        
+        <div class="cost-row">
+          <div class="form-group">
+            <label>👷 Labour Cost (BWP)</label>
+            <input type="number" id="labourCost" value="5200.00" step="100" placeholder="0.00">
+          </div>
+          <div class="form-group">
+            <label>📦 Material Cost (BWP)</label>
+            <input type="number" id="materialCost" value="12850.50" step="100" placeholder="0.00">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>🔧 Additional Items (comma separated, optional)</label>
+          <input type="text" id="additionalItems" placeholder="e.g., GIS Rate, Pole Protector" value="GIS Rate, Ready Box">
+        </div>
+
+        <!-- live total preview -->
+        <div class="dynamic-total">
+          <span class="total-label">💰 AUTOMATED TOTAL:</span>
+          <span class="total-value" id="liveTotalSpan">P 18,050.50</span>
+        </div>
+
+        <div class="button-group">
+          <button type="button" id="refreshClaimBtn" class="btn-secondary">🔄 Update Claim</button>
+          <button type="button" id="printClaimBtn">🖨️ Print Claim (PDF/Paper)</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- RIGHT: CLAIM OUTPUT (exact Excel-style format for auditing) -->
+    <div class="output-panel">
+      <div class="claim-preview-card">
+        <h3>📄 Claim Document (Works Valuation Format)</h3>
+        <div id="claimDocumentContainer">
+          <!-- dynamic claim will be injected here matching the familiar structure -->
+          <div class="claim-document" id="liveClaimDoc">
+            <!-- filled by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // DOM Elements
+  const woNumberInput = document.getElementById('woNumber');
+  const projectTitleInput = document.getElementById('projectTitle');
+  const locationInput = document.getElementById('location');
+  const labourInput = document.getElementById('labourCost');
+  const materialInput = document.getElementById('materialCost');
+  const additionalItemsInput = document.getElementById('additionalItems');
+  const liveTotalSpan = document.getElementById('liveTotalSpan');
+
+  // Helper: format Pula (Botswana currency)
+  function formatPula(amount) {
+    let num = parseFloat(amount);
+    if (isNaN(num)) num = 0;
+    return 'P ' + num.toLocaleString('en-BW', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  // Calculate total from labour + material
+  function calculateTotal() {
+    let labour = parseFloat(labourInput.value) || 0;
+    let material = parseFloat(materialInput.value) || 0;
+    return labour + material;
+  }
+
+  // Generate dynamic item rows based on "Additional Items" field, plus standard items.
+  // Mimics the Excel tables from client files: Service connection, GIS, Location factor etc.
+  function buildItemRows() {
+    const labourVal = parseFloat(labourInput.value) || 0;
+    const materialVal = parseFloat(materialInput.value) || 0;
+    const locationFactorPercent = 29.25; // standard from their sheets (location factor)
+    
+    // Base items from typical BPC claim structure
+    let items = [];
+    // 1. Service Connection (Material component)
+    if (materialVal > 0) {
+      items.push({
+        desc: "Service Conn; 230V; 60A; Single Phase; U/G",
+        qty: 1,
+        rate: materialVal,
+        amount: materialVal
+      });
+    } else {
+      items.push({
+        desc: "Service Conn; 230V; 60A; Single Phase; U/G",
+        qty: 1,
+        rate: 0,
+        amount: 0
+      });
+    }
+    
+    // 2. Labour based item: GIS Rate or Labour Installation
+    if (labourVal > 0) {
+      items.push({
+        desc: "Installation labour (GIS rate & connection works)",
+        qty: 1,
+        rate: labourVal,
+        amount: labourVal
+      });
+    } else {
+      items.push({
+        desc: "Installation labour (GIS rate & connection works)",
+        qty: 1,
+        rate: 0,
+        amount: 0
+      });
+    }
+    
+    // 3. Additional items from user input (split by comma)
+    let extraRaw = additionalItemsInput.value.trim();
+    if (extraRaw !== "") {
+      let extras = extraRaw.split(',').map(s => s.trim()).filter(s => s.length > 0);
+      extras.forEach((item, idx) => {
+        // assign a dummy rate of 0 for extra description, but user can see it's for info
+        // but we can also simulate a small amount if needed: for realism, optional zero
+        items.push({
+          desc: item,
+          qty: 1,
+          rate: 0,
+          amount: 0
+        });
+      });
+    }
+    
+    // 4. Location Factor (common in all work orders: 29.25%)
+    const subtotalBeforeLocation = items.reduce((sum, it) => sum + it.amount, 0);
+    const locationAmount = (locationFactorPercent / 100) * subtotalBeforeLocation;
+    items.push({
+      desc: `Location Factor @ ${locationFactorPercent}%`,
+      qty: 1,
+      rate: locationFactorPercent / 100,
+      amount: locationAmount
+    });
+    
+    // 5. Markup @ 10% (as per Variation Order sheets)
+    const subTotalAfterLocation = items.reduce((sum, it) => sum + it.amount, 0);
+    const markupPercent = 10;
+    const markupAmount = (markupPercent / 100) * subTotalAfterLocation;
+    items.push({
+      desc: `Markup @ ${markupPercent}%`,
+      qty: 1,
+      rate: markupPercent / 100,
+      amount: markupAmount
+    });
+    
+    return items;
+  }
+  
+  // Recalculate final total based on all items (mirroring the excel formulas)
+  function getCalculatedTotalFromItems() {
+    const items = buildItemRows();
+    return items.reduce((sum, it) => sum + it.amount, 0);
+  }
+  
+  // Render claim document exactly like the Excel format used by BPC & Trends Engineering
+  function renderClaimDocument() {
+    const woNumber = woNumberInput.value.trim() || "N/A";
+    const projectDesc = projectTitleInput.value.trim() || "No project description";
+    const location = locationInput.value.trim() || "Not specified";
+    const labour = parseFloat(labourInput.value) || 0;
+    const material = parseFloat(materialInput.value) || 0;
+    
+    // Build detailed items based on structured inputs (labour+material+ extras)
+    const items = buildItemRows();
+    const totalClaim = items.reduce((sum, it) => sum + it.amount, 0);
+    
+    // Format date for document
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    
+    // HTML structure matches the familiar "Works Valuation" & "CLAIM FORM"
+    let itemsHtml = '';
+    items.forEach((item, idx) => {
+      itemsHtml += `
+        <tr>
+          <td style="padding: 6px; border:1px solid #ccc;">${idx+1}</td>
+          <td style="padding: 6px; border:1px solid #ccc;">${escapeHtml(item.desc)}</td>
+          <td style="padding: 6px; border:1px solid #ccc; text-align:center;">${item.qty}</td>
+          <td style="padding: 6px; border:1px solid #ccc; text-align:right;">${formatPula(item.rate)}</td>
+          <td style="padding: 6px; border:1px solid #ccc; text-align:right;">${formatPula(item.amount)}</td>
+        </tr>
+      `;
+    });
+    
+    const claimHtml = `
+      <div class="claim-document">
+        <div class="doc-header">
+          <div class="doc-title">BOTSWANA POWER CORPORATION</div>
+          <div class="company-sub">WORKS VALUATION / CLAIM FORM</div>
+          <div class="company-sub">Trends Engineering Services (PTY) Ltd</div>
+        </div>
+        <div class="bpc-details">
+          <span><strong>BPC W/O No.:</strong> ${escapeHtml(woNumber)}</span>
+          <span><strong>Contract:</strong> FREE CONNECTIONS PHASE 46 PROJECT</span>
+          <span><strong>Date:</strong> ${dateStr}</span>
+        </div>
+        <div class="claim-field">
+          <div class="field-label">Project Title:</div>
+          <div class="field-value">${escapeHtml(projectDesc)}</div>
+        </div>
+        <div class="claim-field">
+          <div class="field-label">Location:</div>
+          <div class="field-value">${escapeHtml(location)}</div>
+        </div>
+        <div class="claim-field">
+          <div class="field-label">Location Factor:</div>
+          <div class="field-value">29.25%</div>
+        </div>
+        
+        <table class="items-table">
+          <thead>
+            <tr><th>Item</th><th>Description</th><th>Qty</th><th>Rate/Unit</th><th>Value (BWP)</th></tr>
+          </thead>
+          <tbody>
+            ${itemsHtml}
+          </tbody>
+        </table>
+        
+        <div class="total-row">
+          <span>📌 TOTAL CLAIM AMOUNT (Including Markup & Location Factor):</span>
+          <strong>${formatPula(totalClaim)}</strong>
+        </div>
+        
+        <div class="signature-area">
+          <span>Prepared by: Trends Engineering<br/>_________________________</span>
+          <span>Inspector (BPC):<br/>_________________________</span>
+        </div>
+      </div>
+    `;
+    
+    document.getElementById('liveClaimDoc').innerHTML = claimHtml;
+    // update live total badge on left panel with the fully calculated total (including markup/location)
+    liveTotalSpan.innerText = formatPula(totalClaim);
+  }
+  
+  // simple XSS protection
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+      return c;
+    });
+  }
+  
+  // Real-time update: any change in inputs refreshes claim preview
+  function refreshAll() {
+    renderClaimDocument();
+    // Also update the live total inside input area to match final claim total
+    const items = buildItemRows();
+    const finalTotal = items.reduce((sum, it) => sum + it.amount, 0);
+    liveTotalSpan.innerText = formatPula(finalTotal);
+  }
+  
+  // Print function: prints the claim document area only
+  function printClaim() {
+    window.print();
+  }
+  
+  // Event listeners for real-time updates
+  function bindEvents() {
+    woNumberInput.addEventListener('input', refreshAll);
+    projectTitleInput.addEventListener('input', refreshAll);
+    locationInput.addEventListener('input', refreshAll);
+    labourInput.addEventListener('input', refreshAll);
+    materialInput.addEventListener('input', refreshAll);
+    additionalItemsInput.addEventListener('input', refreshAll);
+    
+    document.getElementById('refreshClaimBtn').addEventListener('click', refreshAll);
+    document.getElementById('printClaimBtn').addEventListener('click', printClaim);
+  }
+  
+  // Set some initial sample values that represent a realistic scenario from Excel files
+  function setInitialData() {
+    woNumberInput.value = "448223";
+    projectTitleInput.value = "Ratanang Mahupe – Single Phase Service Connection";
+    locationInput.value = "Kauxwi, Modubana";
+    labourInput.value = "5200.00";
+    materialInput.value = "12850.50";
+    additionalItemsInput.value = "GIS RATE-Service connections, Ready Box Installation";
+    refreshAll();
+  }
+  
+  // Extra: ensure that numeric fields never become NaN, and re-calc on blur
+  function sanitizeNumberFields() {
+    const fields = [labourInput, materialInput];
+    fields.forEach(field => {
+      field.addEventListener('blur', function() {
+        let val = parseFloat(this.value);
+        if (isNaN(val)) this.value = 0;
+        else this.value = val;
+        refreshAll();
+      });
+    });
+  }
+  
+  // initialize prototype
+  setInitialData();
+  bindEvents();
+  sanitizeNumberFields();
+  refreshAll(); // final render
+  
+  // update also on page load
+  window.addEventListener('DOMContentLoaded', () => {
+    refreshAll();
+  });
+</script>
+</body>
+</html>
