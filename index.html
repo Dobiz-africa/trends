@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trends Engineering Claim Processing System (Prototype)</title>
+  <title>Trends Engineering | Claims Management System</title>
   <style>
     * {
       margin: 0;
@@ -12,154 +12,150 @@
     }
 
     body {
-      background: #f0f4f8;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      padding: 2rem;
-      color: #1e2a3e;
+      background: #e8ecf0;
+      font-family: 'Arial', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 1.5rem;
+      color: #1a2a3a;
     }
 
-    /* Main container */
-    .prototype-container {
-      max-width: 1400px;
+    .container {
+      max-width: 1600px;
       margin: 0 auto;
     }
 
-    /* Header */
-    .app-header {
-      margin-bottom: 2rem;
-      text-align: center;
+    .header {
+      margin-bottom: 1.8rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid #2c5f4b;
     }
 
-    .app-header h1 {
-      font-size: 1.8rem;
-      color: #0f3b2c;
+    .header h1 {
+      font-size: 1.6rem;
+      color: #1f4d3a;
       font-weight: 600;
     }
 
-    .app-header p {
-      color: #2c5f4b;
+    .header p {
+      color: #4a627a;
       margin-top: 0.3rem;
+      font-size: 0.85rem;
     }
 
-    /* Two column layout */
+    .status-banner {
+      background: #dff0d8;
+      border-left: 4px solid #3c763d;
+      padding: 0.5rem 1rem;
+      margin-top: 0.8rem;
+      font-size: 0.8rem;
+      color: #3c763d;
+    }
+
     .dashboard {
       display: flex;
       flex-wrap: wrap;
-      gap: 2rem;
+      gap: 1.8rem;
     }
 
-    /* Input Panel */
     .input-panel {
       flex: 1.2;
-      min-width: 360px;
+      min-width: 380px;
       background: white;
-      border-radius: 28px;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
-      padding: 1.8rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem;
+      border: 1px solid #d4dce4;
     }
 
-    /* Output Panel */
     .output-panel {
       flex: 1.5;
-      min-width: 420px;
+      min-width: 450px;
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
     }
 
-    .claim-preview-card {
+    .claim-preview-card, .saved-claims-card {
       background: white;
-      border-radius: 28px;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-      padding: 1.8rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem;
+      border: 1px solid #d4dce4;
     }
 
     h2 {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       font-weight: 600;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
       color: #1f4d3a;
-      border-left: 5px solid #e67e22;
-      padding-left: 1rem;
+      border-left: 4px solid #e67e22;
+      padding-left: 0.8rem;
     }
 
     h3 {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 600;
       margin-bottom: 1rem;
       color: #2c5f4b;
     }
 
     .form-group {
-      margin-bottom: 1.4rem;
+      margin-bottom: 1rem;
     }
 
     label {
       display: block;
       font-weight: 600;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
       color: #2c3e50;
-      font-size: 0.85rem;
-      letter-spacing: 0.3px;
+      font-size: 0.8rem;
     }
 
     input, textarea, select {
       width: 100%;
-      padding: 0.75rem 1rem;
-      font-size: 0.95rem;
+      padding: 0.6rem 0.8rem;
+      font-size: 0.9rem;
       border: 1px solid #cbd5e1;
-      border-radius: 16px;
+      border-radius: 4px;
       background: white;
       font-family: inherit;
-      transition: 0.2s;
       outline: none;
     }
 
     input:focus, textarea:focus, select:focus {
       border-color: #e67e22;
-      box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.1);
+      box-shadow: 0 0 0 2px rgba(230, 126, 34, 0.1);
     }
 
-    textarea {
-      resize: vertical;
-      min-height: 80px;
-    }
-
-    .cost-row {
+    .row-2col {
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
     }
 
-    .cost-row .form-group {
+    .row-2col .form-group {
       flex: 1;
     }
 
     .dynamic-total {
-      background: #eef2f5;
-      padding: 1rem 1.2rem;
-      border-radius: 20px;
-      margin: 1rem 0 1.5rem;
+      background: #f5f7fa;
+      padding: 0.8rem 1rem;
+      border-radius: 6px;
+      margin: 1rem 0 1.2rem;
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      border: 1px solid #dce5ec;
-    }
-
-    .total-label {
-      font-weight: 700;
-      color: #1e4a76;
+      border: 1px solid #e2e8f0;
     }
 
     .total-value {
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       font-weight: 800;
       color: #e67e22;
     }
 
     .button-group {
       display: flex;
-      gap: 1rem;
+      gap: 0.8rem;
       flex-wrap: wrap;
       margin-top: 0.5rem;
     }
@@ -167,235 +163,236 @@
     button {
       background: #1f6e5c;
       border: none;
-      padding: 0.7rem 1.5rem;
-      border-radius: 40px;
+      padding: 0.6rem 1.2rem;
+      border-radius: 4px;
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: white;
       cursor: pointer;
       transition: all 0.2s;
-      font-family: inherit;
     }
 
-    button:hover {
-      background: #0e5544;
-      transform: translateY(-1px);
+    button:hover { background: #0e5544; }
+    .btn-secondary { background: #4b6f86; }
+    .btn-secondary:hover { background: #365a70; }
+    .btn-warning { background: #d9534f; }
+    .btn-warning:hover { background: #c9302c; }
+    .btn-info { background: #5bc0de; }
+    .btn-info:hover { background: #31b0d5; }
+
+    .search-box { margin-bottom: 1rem; }
+    .search-box input { padding: 0.5rem 0.8rem; font-size: 0.85rem; }
+
+    .claims-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
     }
 
-    .btn-secondary {
-      background: #4b6f86;
+    .claims-table th, .claims-table td {
+      border: 1px solid #d4dce4;
+      padding: 0.6rem;
+      text-align: left;
     }
 
-    .btn-secondary:hover {
-      background: #365a70;
-    }
+    .claims-table th { background: #f1f5f9; font-weight: 700; }
+    .claims-table td:last-child { white-space: nowrap; }
 
-    .btn-outline {
-      background: white;
-      border: 1.5px solid #1f6e5c;
-      color: #1f6e5c;
-    }
+    .action-buttons { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .action-btn { padding: 0.2rem 0.6rem; font-size: 0.7rem; }
 
-    .btn-outline:hover {
-      background: #e9f4f0;
+    .status-badge {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
     }
+    .status-draft { background: #f0f0f0; color: #666; }
+    .status-submitted { background: #d9edf7; color: #31708f; }
+    .status-approved { background: #dff0d8; color: #3c763d; }
+    .status-paid { background: #d4edc9; color: #2e6b1f; }
 
-    /* Claim Document - Exactly matching the familiar BPC/Excel format */
     .claim-document {
       background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 20px;
-      padding: 1.6rem;
-      font-family: 'Courier New', 'Segoe UI', monospace;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      border: 1px solid #aaa;
+      padding: 1.2rem;
+      font-family: 'Arial', sans-serif;
+      font-size: 0.85rem;
     }
 
     .doc-header {
       text-align: center;
-      border-bottom: 2px solid #2c3e50;
-      margin-bottom: 1.5rem;
-      padding-bottom: 0.8rem;
+      border-bottom: 2px solid #000;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
     }
 
-    .doc-title {
-      font-size: 1.6rem;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: #1f4d3a;
-    }
+    .doc-title { font-size: 1.3rem; font-weight: 800; text-transform: uppercase; }
+    .company-sub { font-size: 0.75rem; color: #555; margin-top: 3px; }
 
-    .company-sub {
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: #4a627a;
-      margin-top: 4px;
-    }
-
-    .bpc-details {
+    .doc-meta {
       background: #f9fafb;
-      padding: 0.8rem;
-      border-radius: 12px;
-      margin: 1rem 0;
-      font-size: 0.85rem;
+      padding: 0.6rem;
+      border: 1px solid #ddd;
+      margin: 0.8rem 0;
+      font-size: 0.75rem;
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
     }
 
     .claim-field {
-      margin: 0.8rem 0;
+      margin: 0.5rem 0;
       display: flex;
-      border-bottom: 1px dotted #e2e8f0;
-      padding: 0.4rem 0;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 0.3rem 0;
     }
 
-    .field-label {
-      font-weight: 700;
-      width: 150px;
-      flex-shrink: 0;
-      color: #2c5a74;
-    }
-
-    .field-value {
-      font-weight: 500;
-      word-break: break-word;
-    }
+    .field-label { font-weight: 700; width: 140px; flex-shrink: 0; }
 
     .items-table {
       width: 100%;
-      margin: 1.2rem 0;
+      margin: 1rem 0;
       border-collapse: collapse;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
     }
 
     .items-table th, .items-table td {
-      border: 1px solid #cbd5e1;
-      padding: 0.5rem;
+      border: 1px solid #aaa;
+      padding: 0.4rem;
       text-align: left;
-      vertical-align: top;
     }
-
-    .items-table th {
-      background: #f1f5f9;
-      font-weight: 700;
-    }
+    .items-table td:last-child, .items-table th:last-child { text-align: right; }
 
     .total-row {
-      margin-top: 1rem;
-      font-size: 1.2rem;
+      margin-top: 0.8rem;
+      font-size: 1rem;
       font-weight: 800;
-      border-top: 2px solid #e67e22;
-      padding-top: 0.7rem;
+      border-top: 2px solid #000;
+      padding-top: 0.5rem;
       display: flex;
       justify-content: space-between;
     }
 
     .signature-area {
-      margin-top: 1.8rem;
-      font-size: 0.75rem;
-      border-top: 1px dashed #aaa;
-      padding-top: 1rem;
+      margin-top: 1.2rem;
+      font-size: 0.7rem;
+      border-top: 1px solid #ccc;
+      padding-top: 0.8rem;
       display: flex;
       justify-content: space-between;
     }
 
+    .footnote { font-size: 0.65rem; text-align: center; margin-top: 0.8rem; color: #6c8dae; }
+
     @media print {
-      body {
-        background: white;
-        padding: 0;
-        margin: 0;
-      }
-      .input-panel, .button-group, .print-hide {
-        display: none !important;
-      }
-      .output-panel {
-        min-width: 100%;
-      }
-      .claim-preview-card {
-        box-shadow: none;
-        padding: 0;
-      }
-      .claim-document {
-        border: none;
-      }
+      .input-panel, .saved-claims-card, .button-group, .print-hide { display: none !important; }
+      .output-panel { min-width: 100%; }
+      .claim-preview-card { box-shadow: none; padding: 0; }
+      .claim-document { border: none; }
     }
 
-    .footnote {
-      font-size: 0.7rem;
-      text-align: center;
-      margin-top: 1rem;
-      color: #6c8dae;
-    }
-
-    hr {
-      margin: 1rem 0;
-    }
+    .loading { opacity: 0.6; pointer-events: none; }
   </style>
 </head>
 <body>
-<div class="prototype-container">
-  <div class="app-header">
-    <h1>Trends Engineering · Claim Automation Prototype</h1>
-    <p>Prototype for automated claim processing and document generation</p>
+<div class="container">
+  <div class="header">
+    <h1>Trends Engineering · Claims Management System</h1>
   </div>
 
   <div class="dashboard">
-    <!-- LEFT: DATA INPUT PANEL (Structured capture) -->
     <div class="input-panel">
-      <h2>📋 Job & Cost Entry</h2>
-      <form id="jobForm" onsubmit="return false;">
-        <div class="form-group">
-          <label>📌 BPC Work Order No.</label>
-          <input type="text" id="woNumber" value="448223" placeholder="e.g., 448223">
-        </div>
-        <div class="form-group">
-          <label>🏗️ Project Title / Job Description</label>
-          <textarea id="projectTitle" rows="2">Ratanang Mahupe - New single phase connection</textarea>
-        </div>
-        <div class="form-group">
-          <label>📍 Location / Village</label>
-          <input type="text" id="location" value="Kauxwi, Modubana">
+      <h2>Claim Entry Form</h2>
+      <form id="claimForm" onsubmit="return false;">
+        <div class="row-2col">
+          <div class="form-group">
+            <label>BPC Work Order No.</label>
+            <input type="text" id="woNumber" placeholder="e.g., 448223">
+          </div>
+          <div class="form-group">
+            <label>Reference Number</label>
+            <input type="text" id="refNumber" readonly style="background:#f5f5f5;">
+          </div>
         </div>
         
-        <div class="cost-row">
+        <div class="row-2col">
           <div class="form-group">
-            <label>👷 Labour Cost (BWP)</label>
-            <input type="number" id="labourCost" value="5200.00" step="100" placeholder="0.00">
+            <label>Claim Date</label>
+            <input type="text" id="claimDate" readonly style="background:#f5f5f5;">
           </div>
           <div class="form-group">
-            <label>📦 Material Cost (BWP)</label>
-            <input type="number" id="materialCost" value="12850.50" step="100" placeholder="0.00">
+            <label>Claim Status</label>
+            <select id="claimStatus">
+              <option value="Draft">Draft</option>
+              <option value="Submitted">Submitted</option>
+              <option value="Approved">Approved</option>
+              <option value="Paid">Paid</option>
+            </select>
           </div>
         </div>
 
         <div class="form-group">
-          <label>🔧 Additional Items (comma separated, optional)</label>
-          <input type="text" id="additionalItems" placeholder="e.g., GIS Rate, Pole Protector" value="GIS Rate, Ready Box">
+          <label>Project Title / Job Description</label>
+          <textarea id="projectTitle" rows="2" placeholder="Describe the work performed..."></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label>Location / Village</label>
+          <input type="text" id="location" placeholder="e.g., Kauxwi, Modubana">
+        </div>
+        
+        <div class="row-2col">
+          <div class="form-group">
+            <label>Labour Cost (BWP)</label>
+            <input type="number" id="labourCost" value="0" step="100" placeholder="0.00">
+          </div>
+          <div class="form-group">
+            <label>Material Cost (BWP)</label>
+            <input type="number" id="materialCost" value="0" step="100" placeholder="0.00">
+          </div>
         </div>
 
-        <!-- live total preview -->
+        <div class="form-group">
+          <label>Additional Items (comma separated)</label>
+          <input type="text" id="additionalItems" placeholder="e.g., GIS Rate, Pole Protector">
+        </div>
+
         <div class="dynamic-total">
-          <span class="total-label">💰 AUTOMATED TOTAL:</span>
-          <span class="total-value" id="liveTotalSpan">P 18,050.50</span>
+          <span class="total-label">Total Claim Amount:</span>
+          <span class="total-value" id="liveTotalSpan">P 0.00</span>
         </div>
 
         <div class="button-group">
-          <button type="button" id="refreshClaimBtn" class="btn-secondary">🔄 Update Claim</button>
-          <button type="button" id="printClaimBtn">🖨️ Print Claim (PDF/Paper)</button>
+          <button type="button" id="saveClaimBtn" style="background:#2c5f4b;">Save Claim</button>
+          <button type="button" id="refreshPreviewBtn" class="btn-secondary">Update Preview</button>
+          <button type="button" id="printClaimBtn">Print</button>
+          <button type="button" id="clearFormBtn" class="btn-warning">Clear Form</button>
         </div>
       </form>
     </div>
 
-    <!-- RIGHT: CLAIM OUTPUT (exact Excel-style format for auditing) -->
     <div class="output-panel">
       <div class="claim-preview-card">
-        <h3>📄 Claim Document (Works Valuation Format)</h3>
+        <h3>Claim Document</h3>
         <div id="claimDocumentContainer">
-          <!-- dynamic claim will be injected here matching the familiar structure -->
-          <div class="claim-document" id="liveClaimDoc">
-            <!-- filled by JS -->
-          </div>
+          <div class="claim-document" id="liveClaimDoc"></div>
+        </div>
+      </div>
+
+      <div class="saved-claims-card">
+        <h3>Saved Claims</h3>
+        <div class="search-box">
+          <input type="text" id="searchClaims" placeholder="Search by Work Order or Project Title..." autocomplete="off">
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="claims-table">
+            <thead>
+              <tr><th>Ref No.</th><th>Work Order</th><th>Project Title</th><th>Total (BWP)</th><th>Status</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="claimsTableBody"><tr><td colspan="6" style="text-align:center;">Loading claims...</td></tr></tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -403,273 +400,297 @@
 </div>
 
 <script>
-  // DOM Elements
-  const woNumberInput = document.getElementById('woNumber');
-  const projectTitleInput = document.getElementById('projectTitle');
-  const locationInput = document.getElementById('location');
-  const labourInput = document.getElementById('labourCost');
-  const materialInput = document.getElementById('materialCost');
-  const additionalItemsInput = document.getElementById('additionalItems');
-  const liveTotalSpan = document.getElementById('liveTotalSpan');
-
-  // Helper: format Pula (Botswana currency)
+  // ==================== AIRTABLE CONFIGURATION ====================
+  const AIRTABLE_API_KEY = "patiCR7XUxH77JZSe.842f621a50ac2cc1246f3b9f9ff5ef24125b447fa8dfc51e1a47348f21ead3f8";
+  const AIRTABLE_BASE_ID = "appjAKYg4O29CgBki";
+  const AIRTABLE_TABLE_NAME = "Claims";
+  
+  const AIRTABLE_URL = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}`;
+  
+  let allClaims = [];
+  
   function formatPula(amount) {
     let num = parseFloat(amount);
     if (isNaN(num)) num = 0;
     return 'P ' + num.toLocaleString('en-BW', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
-
-  // Calculate total from labour + material
-  function calculateTotal() {
-    let labour = parseFloat(labourInput.value) || 0;
-    let material = parseFloat(materialInput.value) || 0;
-    return labour + material;
-  }
-
-  // Generate dynamic item rows based on "Additional Items" field, plus standard items.
-  // Mimics the Excel tables from client files: Service connection, GIS, Location factor etc.
-  function buildItemRows() {
-    const labourVal = parseFloat(labourInput.value) || 0;
-    const materialVal = parseFloat(materialInput.value) || 0;
-    const locationFactorPercent = 29.25; // standard from their sheets (location factor)
-    
-    // Base items from typical BPC claim structure
+  
+  function buildItemRows(labourVal, materialVal, additionalItemsStr) {
+    const locationFactorPercent = 29.25;
+    const markupPercent = 10;
     let items = [];
-    // 1. Service Connection (Material component)
-    if (materialVal > 0) {
-      items.push({
-        desc: "Service Conn; 230V; 60A; Single Phase; U/G",
-        qty: 1,
-        rate: materialVal,
-        amount: materialVal
-      });
-    } else {
-      items.push({
-        desc: "Service Conn; 230V; 60A; Single Phase; U/G",
-        qty: 1,
-        rate: 0,
-        amount: 0
+    
+    items.push({ desc: "Service Conn; 230V; 60A; Single Phase; U/G", qty: 1, rate: materialVal, amount: materialVal });
+    items.push({ desc: "Installation labour (GIS rate & connection works)", qty: 1, rate: labourVal, amount: labourVal });
+    
+    if (additionalItemsStr && additionalItemsStr.trim() !== "") {
+      additionalItemsStr.split(',').map(s => s.trim()).filter(s => s.length > 0).forEach(item => {
+        items.push({ desc: item, qty: 1, rate: 0, amount: 0 });
       });
     }
     
-    // 2. Labour based item: GIS Rate or Labour Installation
-    if (labourVal > 0) {
-      items.push({
-        desc: "Installation labour (GIS rate & connection works)",
-        qty: 1,
-        rate: labourVal,
-        amount: labourVal
-      });
-    } else {
-      items.push({
-        desc: "Installation labour (GIS rate & connection works)",
-        qty: 1,
-        rate: 0,
-        amount: 0
-      });
-    }
-    
-    // 3. Additional items from user input (split by comma)
-    let extraRaw = additionalItemsInput.value.trim();
-    if (extraRaw !== "") {
-      let extras = extraRaw.split(',').map(s => s.trim()).filter(s => s.length > 0);
-      extras.forEach((item, idx) => {
-        // assign a dummy rate of 0 for extra description, but user can see it's for info
-        // but we can also simulate a small amount if needed: for realism, optional zero
-        items.push({
-          desc: item,
-          qty: 1,
-          rate: 0,
-          amount: 0
-        });
-      });
-    }
-    
-    // 4. Location Factor (common in all work orders: 29.25%)
     const subtotalBeforeLocation = items.reduce((sum, it) => sum + it.amount, 0);
     const locationAmount = (locationFactorPercent / 100) * subtotalBeforeLocation;
-    items.push({
-      desc: `Location Factor @ ${locationFactorPercent}%`,
-      qty: 1,
-      rate: locationFactorPercent / 100,
-      amount: locationAmount
-    });
+    items.push({ desc: `Location Factor @ ${locationFactorPercent}%`, qty: 1, rate: locationFactorPercent / 100, amount: locationAmount });
     
-    // 5. Markup @ 10% (as per Variation Order sheets)
     const subTotalAfterLocation = items.reduce((sum, it) => sum + it.amount, 0);
-    const markupPercent = 10;
     const markupAmount = (markupPercent / 100) * subTotalAfterLocation;
-    items.push({
-      desc: `Markup @ ${markupPercent}%`,
-      qty: 1,
-      rate: markupPercent / 100,
-      amount: markupAmount
-    });
+    items.push({ desc: `Markup @ ${markupPercent}%`, qty: 1, rate: markupPercent / 100, amount: markupAmount });
     
     return items;
   }
   
-  // Recalculate final total based on all items (mirroring the excel formulas)
-  function getCalculatedTotalFromItems() {
-    const items = buildItemRows();
+  function calculateTotal() {
+    const labour = parseFloat(document.getElementById('labourCost').value) || 0;
+    const material = parseFloat(document.getElementById('materialCost').value) || 0;
+    const additional = document.getElementById('additionalItems').value;
+    const items = buildItemRows(labour, material, additional);
     return items.reduce((sum, it) => sum + it.amount, 0);
   }
   
-  // Render claim document exactly like the Excel format used by BPC & Trends Engineering
-  function renderClaimDocument() {
-    const woNumber = woNumberInput.value.trim() || "N/A";
-    const projectDesc = projectTitleInput.value.trim() || "No project description";
-    const location = locationInput.value.trim() || "Not specified";
-    const labour = parseFloat(labourInput.value) || 0;
-    const material = parseFloat(materialInput.value) || 0;
+  function renderClaimPreview() {
+    const woNumber = document.getElementById('woNumber').value.trim() || "N/A";
+    const projectDesc = document.getElementById('projectTitle').value.trim() || "No description";
+    const location = document.getElementById('location').value.trim() || "Not specified";
+    const labour = parseFloat(document.getElementById('labourCost').value) || 0;
+    const material = parseFloat(document.getElementById('materialCost').value) || 0;
+    const additional = document.getElementById('additionalItems').value;
+    const status = document.getElementById('claimStatus').value;
+    const refNumber = document.getElementById('refNumber').value || "New";
+    const claimDate = document.getElementById('claimDate').value || new Date().toLocaleDateString('en-GB');
     
-    // Build detailed items based on structured inputs (labour+material+ extras)
-    const items = buildItemRows();
+    const items = buildItemRows(labour, material, additional);
     const totalClaim = items.reduce((sum, it) => sum + it.amount, 0);
     
-    // Format date for document
-    const now = new Date();
-    const dateStr = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-    
-    // HTML structure matches the familiar "Works Valuation" & "CLAIM FORM"
     let itemsHtml = '';
     items.forEach((item, idx) => {
-      itemsHtml += `
-        <tr>
-          <td style="padding: 6px; border:1px solid #ccc;">${idx+1}</td>
-          <td style="padding: 6px; border:1px solid #ccc;">${escapeHtml(item.desc)}</td>
-          <td style="padding: 6px; border:1px solid #ccc; text-align:center;">${item.qty}</td>
-          <td style="padding: 6px; border:1px solid #ccc; text-align:right;">${formatPula(item.rate)}</td>
-          <td style="padding: 6px; border:1px solid #ccc; text-align:right;">${formatPula(item.amount)}</td>
-        </tr>
-      `;
+      itemsHtml += `<tr><td>${idx+1}</td><td>${escapeHtml(item.desc)}</td><td style="text-align:center;">${item.qty}</td><td style="text-align:right;">${formatPula(item.rate)}</td><td style="text-align:right;">${formatPula(item.amount)}</td></tr>`;
     });
     
     const claimHtml = `
       <div class="claim-document">
-        <div class="doc-header">
-          <div class="doc-title">BOTSWANA POWER CORPORATION</div>
-          <div class="company-sub">WORKS VALUATION / CLAIM FORM</div>
-          <div class="company-sub">Trends Engineering Services (PTY) Ltd</div>
-        </div>
-        <div class="bpc-details">
-          <span><strong>BPC W/O No.:</strong> ${escapeHtml(woNumber)}</span>
-          <span><strong>Contract:</strong> FREE CONNECTIONS PHASE 46 PROJECT</span>
-          <span><strong>Date:</strong> ${dateStr}</span>
-        </div>
-        <div class="claim-field">
-          <div class="field-label">Project Title:</div>
-          <div class="field-value">${escapeHtml(projectDesc)}</div>
-        </div>
-        <div class="claim-field">
-          <div class="field-label">Location:</div>
-          <div class="field-value">${escapeHtml(location)}</div>
-        </div>
-        <div class="claim-field">
-          <div class="field-label">Location Factor:</div>
-          <div class="field-value">29.25%</div>
-        </div>
-        
-        <table class="items-table">
-          <thead>
-            <tr><th>Item</th><th>Description</th><th>Qty</th><th>Rate/Unit</th><th>Value (BWP)</th></tr>
-          </thead>
-          <tbody>
-            ${itemsHtml}
-          </tbody>
-        </table>
-        
-        <div class="total-row">
-          <span>📌 TOTAL CLAIM AMOUNT (Including Markup & Location Factor):</span>
-          <strong>${formatPula(totalClaim)}</strong>
-        </div>
-        
-        <div class="signature-area">
-          <span>Prepared by: Trends Engineering<br/>_________________________</span>
-          <span>Inspector (BPC):<br/>_________________________</span>
-        </div>
-      </div>
-    `;
+        <div class="doc-header"><div class="doc-title">BOTSWANA POWER CORPORATION</div><div class="company-sub">WORKS VALUATION / CLAIM FORM</div><div class="company-sub">Trends Engineering Services (PTY) Ltd</div></div>
+        <div class="doc-meta"><span><strong>Reference:</strong> ${escapeHtml(refNumber)}</span><span><strong>Claim Date:</strong> ${escapeHtml(claimDate)}</span><span><strong>Status:</strong> ${escapeHtml(status)}</span></div>
+        <div class="doc-meta" style="margin-top:-0.5rem;"><span><strong>BPC W/O No.:</strong> ${escapeHtml(woNumber)}</span><span><strong>Contract:</strong> FREE CONNECTIONS PHASE 46 PROJECT</span></div>
+        <div class="claim-field"><div class="field-label">Project Title:</div><div>${escapeHtml(projectDesc)}</div></div>
+        <div class="claim-field"><div class="field-label">Location:</div><div>${escapeHtml(location)}</div></div>
+        <div class="claim-field"><div class="field-label">Location Factor:</div><div>29.25%</div></div>
+        <table class="items-table"><thead><tr><th>Item</th><th>Description</th><th>Qty</th><th>Rate/Unit</th><th>Value (BWP)</th></tr></thead><tbody>${itemsHtml}</tbody></table>
+        <div class="total-row"><span>TOTAL CLAIM AMOUNT:</span><strong>${formatPula(totalClaim)}</strong></div>
+        <div class="signature-area"><span>Prepared by: Trends Engineering<br/>_________________________</span><span>Inspector (BPC):<br/>_________________________</span></div>
+      </div>`;
     
     document.getElementById('liveClaimDoc').innerHTML = claimHtml;
-    // update live total badge on left panel with the fully calculated total (including markup/location)
-    liveTotalSpan.innerText = formatPula(totalClaim);
+    document.getElementById('liveTotalSpan').innerText = formatPula(totalClaim);
   }
   
-  // simple XSS protection
-  function escapeHtml(str) {
-    if (!str) return '';
-    return str.replace(/[&<>]/g, function(m) {
-      if (m === '&') return '&amp;';
-      if (m === '<') return '&lt;';
-      if (m === '>') return '&gt;';
-      return m;
-    }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
-      return c;
-    });
-  }
+  function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
   
-  // Real-time update: any change in inputs refreshes claim preview
-  function refreshAll() {
-    renderClaimDocument();
-    // Also update the live total inside input area to match final claim total
-    const items = buildItemRows();
-    const finalTotal = items.reduce((sum, it) => sum + it.amount, 0);
-    liveTotalSpan.innerText = formatPula(finalTotal);
-  }
-  
-  // Print function: prints the claim document area only
-  function printClaim() {
-    window.print();
-  }
-  
-  // Event listeners for real-time updates
-  function bindEvents() {
-    woNumberInput.addEventListener('input', refreshAll);
-    projectTitleInput.addEventListener('input', refreshAll);
-    locationInput.addEventListener('input', refreshAll);
-    labourInput.addEventListener('input', refreshAll);
-    materialInput.addEventListener('input', refreshAll);
-    additionalItemsInput.addEventListener('input', refreshAll);
+  async function airtableRequest(method, endpoint = '', body = null) {
+    const url = endpoint ? `${AIRTABLE_URL}/${endpoint}` : AIRTABLE_URL;
+    const headers = { 'Authorization': `Bearer ${AIRTABLE_API_KEY}`, 'Content-Type': 'application/json' };
+    const options = { method, headers };
+    if (body) options.body = JSON.stringify(body);
     
-    document.getElementById('refreshClaimBtn').addEventListener('click', refreshAll);
-    document.getElementById('printClaimBtn').addEventListener('click', printClaim);
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error?.message || `HTTP ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Airtable API Error:', error);
+      document.getElementById('connectionStatus').innerHTML = '⚠ Database connection error - Please verify credentials';
+      document.getElementById('connectionStatus').style.background = "#f2dede";
+      document.getElementById('connectionStatus').style.color = "#a94442";
+      document.getElementById('connectionStatus').style.borderLeftColor = "#a94442";
+      throw error;
+    }
   }
   
-  // Set some initial sample values that represent a realistic scenario from Excel files
-  function setInitialData() {
-    woNumberInput.value = "448223";
-    projectTitleInput.value = "Ratanang Mahupe – Single Phase Service Connection";
-    locationInput.value = "Kauxwi, Modubana";
-    labourInput.value = "5200.00";
-    materialInput.value = "12850.50";
-    additionalItemsInput.value = "GIS RATE-Service connections, Ready Box Installation";
-    refreshAll();
+  async function fetchClaims() {
+    try {
+      const data = await airtableRequest('GET');
+      allClaims = data.records.map(record => ({
+        id: record.id,
+        refNumber: record.fields['Reference Number'] || '',
+        woNumber: record.fields['Work Order Number'] || '',
+        projectTitle: record.fields['Project Title'] || '',
+        location: record.fields['Location'] || '',
+        labourCost: record.fields['Labour Cost'] || 0,
+        materialCost: record.fields['Material Cost'] || 0,
+        totalAmount: record.fields['Total Amount'] || 0,
+        status: record.fields['Status'] || 'Draft',
+        claimDate: record.fields['Claim Date'] || ''
+      }));
+      renderSavedClaimsTable();
+      document.getElementById('connectionStatus').innerHTML = '✓ Database connection established';
+    } catch (error) {
+      document.getElementById('claimsTableBody').innerHTML = '<tr><td colspan="6" style="text-align:center;">Unable to load claims. Please verify database configuration.</td></tr>';
+    }
   }
   
-  // Extra: ensure that numeric fields never become NaN, and re-calc on blur
-  function sanitizeNumberFields() {
-    const fields = [labourInput, materialInput];
-    fields.forEach(field => {
-      field.addEventListener('blur', function() {
-        let val = parseFloat(this.value);
-        if (isNaN(val)) this.value = 0;
-        else this.value = val;
-        refreshAll();
-      });
+  async function saveClaimToAirtable() {
+    const woNumber = document.getElementById('woNumber').value.trim();
+    if (!woNumber) { alert("Please enter a Work Order Number before saving."); return; }
+    
+    const labour = parseFloat(document.getElementById('labourCost').value) || 0;
+    const material = parseFloat(document.getElementById('materialCost').value) || 0;
+    const additional = document.getElementById('additionalItems').value;
+    const totalAmount = calculateTotal();
+    const refNumber = document.getElementById('refNumber').value;
+    const claimDate = document.getElementById('claimDate').value;
+    const status = document.getElementById('claimStatus').value;
+    const projectTitle = document.getElementById('projectTitle').value.trim() || "Untitled";
+    const location = document.getElementById('location').value.trim();
+    
+    const fields = {
+      'Reference Number': refNumber,
+      'Work Order Number': woNumber,
+      'Project Title': projectTitle,
+      'Location': location,
+      'Labour Cost': labour,
+      'Material Cost': material,
+      'Total Amount': totalAmount,
+      'Status': status,
+      'Claim Date': claimDate
+    };
+    
+    const saveBtn = document.getElementById('saveClaimBtn');
+    saveBtn.textContent = 'Saving...';
+    saveBtn.disabled = true;
+    
+    try {
+      await airtableRequest('POST', '', { fields, typecast: true });
+      alert(`Claim saved successfully. Reference: ${refNumber}`);
+      await fetchClaims();
+      generateNewReference();
+      clearForm();
+    } catch (error) {
+      alert(`Failed to save: ${error.message}`);
+    } finally {
+      saveBtn.textContent = 'Save Claim';
+      saveBtn.disabled = false;
+    }
+  }
+  
+  async function deleteClaimFromAirtable(recordId, refNumber) {
+    if (!confirm(`Delete claim ${refNumber} permanently? This action cannot be undone.`)) return;
+    try {
+      await airtableRequest('DELETE', recordId);
+      await fetchClaims();
+      alert(`Claim ${refNumber} deleted successfully.`);
+    } catch (error) {
+      alert(`Failed to delete: ${error.message}`);
+    }
+  }
+  
+  function loadClaimForEdit(claim) {
+    document.getElementById('woNumber').value = claim.woNumber;
+    document.getElementById('projectTitle').value = claim.projectTitle;
+    document.getElementById('location').value = claim.location || '';
+    document.getElementById('labourCost').value = claim.labourCost;
+    document.getElementById('materialCost').value = claim.materialCost;
+    document.getElementById('claimStatus').value = claim.status;
+    document.getElementById('refNumber').value = claim.refNumber;
+    document.getElementById('claimDate').value = claim.claimDate;
+    document.getElementById('additionalItems').value = '';
+    renderClaimPreview();
+  }
+  
+  function generateNewReference() {
+    let maxNum = 0;
+    allClaims.forEach(claim => {
+      const match = claim.refNumber.match(/CLM-(\d+)/);
+      if (match) maxNum = Math.max(maxNum, parseInt(match[1], 10));
     });
+    const nextNum = maxNum + 1;
+    document.getElementById('refNumber').value = `CLM-${String(nextNum).padStart(3, '0')}`;
   }
   
-  // initialize prototype
-  setInitialData();
-  bindEvents();
-  sanitizeNumberFields();
-  refreshAll(); // final render
+  function clearForm() {
+    document.getElementById('woNumber').value = '';
+    document.getElementById('projectTitle').value = '';
+    document.getElementById('location').value = '';
+    document.getElementById('labourCost').value = '0';
+    document.getElementById('materialCost').value = '0';
+    document.getElementById('additionalItems').value = '';
+    document.getElementById('claimStatus').value = 'Draft';
+    generateNewReference();
+    document.getElementById('claimDate').value = new Date().toLocaleDateString('en-GB');
+    renderClaimPreview();
+  }
   
-  // update also on page load
-  window.addEventListener('DOMContentLoaded', () => {
-    refreshAll();
-  });
+  function renderSavedClaimsTable() {
+    const searchTerm = document.getElementById('searchClaims').value.toLowerCase();
+    let filtered = allClaims;
+    if (searchTerm) {
+      filtered = allClaims.filter(c => 
+        c.woNumber.toLowerCase().includes(searchTerm) || 
+        c.projectTitle.toLowerCase().includes(searchTerm)
+      );
+    }
+    
+    const tbody = document.getElementById('claimsTableBody');
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No claims found. Create your first claim.</td></tr>';
+      return;
+    }
+    
+    let html = '';
+    filtered.forEach(claim => {
+      let statusClass = '';
+      if (claim.status === 'Draft') statusClass = 'status-draft';
+      else if (claim.status === 'Submitted') statusClass = 'status-submitted';
+      else if (claim.status === 'Approved') statusClass = 'status-approved';
+      else if (claim.status === 'Paid') statusClass = 'status-paid';
+      
+      html += `<tr>
+        <td>${escapeHtml(claim.refNumber)}</td>
+        <td>${escapeHtml(claim.woNumber)}</td>
+        <td>${escapeHtml(claim.projectTitle.substring(0, 40))}${claim.projectTitle.length > 40 ? '...' : ''}</td>
+        <td style="text-align:right;">${formatPula(claim.totalAmount)}</td>
+        <td><span class="status-badge ${statusClass}">${escapeHtml(claim.status)}</span></td>
+        <td class="action-buttons">
+          <button class="action-btn btn-info" onclick="window.loadClaim('${claim.id}')">View</button>
+          <button class="action-btn btn-warning" onclick="window.deleteClaim('${claim.id}', '${escapeHtml(claim.refNumber)}')">Delete</button>
+        </td>
+      </tr>`;
+    });
+    tbody.innerHTML = html;
+  }
+  
+  window.loadClaim = function(recordId) {
+    const claim = allClaims.find(c => c.id === recordId);
+    if (claim) loadClaimForEdit(claim);
+  };
+  
+  window.deleteClaim = function(recordId, refNumber) {
+    deleteClaimFromAirtable(recordId, refNumber);
+  };
+  
+  function bindEvents() {
+    ['woNumber', 'projectTitle', 'location', 'labourCost', 'materialCost', 'additionalItems', 'claimStatus'].forEach(id => {
+      document.getElementById(id).addEventListener('input', renderClaimPreview);
+      document.getElementById(id).addEventListener('change', renderClaimPreview);
+    });
+    document.getElementById('saveClaimBtn').addEventListener('click', saveClaimToAirtable);
+    document.getElementById('refreshPreviewBtn').addEventListener('click', renderClaimPreview);
+    document.getElementById('printClaimBtn').addEventListener('click', () => window.print());
+    document.getElementById('clearFormBtn').addEventListener('click', clearForm);
+    document.getElementById('searchClaims').addEventListener('input', renderSavedClaimsTable);
+  }
+  
+  async function init() {
+    bindEvents();
+    document.getElementById('claimDate').value = new Date().toLocaleDateString('en-GB');
+    await fetchClaims();
+    generateNewReference();
+    renderClaimPreview();
+  }
+  
+  init();
 </script>
 </body>
 </html>
