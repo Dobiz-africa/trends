@@ -300,6 +300,8 @@
 <div class="container">
   <div class="header">
     <h1>Trends Engineering · Claims Management System</h1>
+    <p></p>
+    <div class="status-banner" id="connectionStatus"></div>
   </div>
 
   <div class="dashboard">
@@ -525,7 +527,7 @@
         claimDate: record.fields['Claim Date'] || ''
       }));
       renderSavedClaimsTable();
-      document.getElementById('connectionStatus').innerHTML = '✓ Database connection established';
+      document.getElementById('connectionStatus').innerHTML = '';
     } catch (error) {
       document.getElementById('claimsTableBody').innerHTML = '<tr><td colspan="6" style="text-align:center;">Unable to load claims. Please verify database configuration.</td></tr>';
     }
